@@ -7,7 +7,7 @@
 # <bitbar.desc>Displays battery percentages of all Bluetooth devices</bitbar.desc>
 # <bitbar.image></bitbar.image>
 # <bitbar.dependencies>bash</bitbar.dependencies>
-# <bitbar.abouturl>https://github.com/fcrwx/battery-percent</bitbar.abouturl>
+# <bitbar.abouturl>https://github.com/fcrwx/BitBarBluetoothBattery/blob/master/README.md</bitbar.abouturl>
 
 # Line pairing trick taken from:
 #  https://stackoverflow.com/questions/1513861/how-do-i-pair-every-two-lines-of-a-text-file-with-bash
