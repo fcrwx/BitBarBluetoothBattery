@@ -12,6 +12,18 @@
 # Line pairing trick taken from:
 #  https://stackoverflow.com/questions/1513861/how-do-i-pair-every-two-lines-of-a-text-file-with-bash
 
+###
+### Customization
+###
+
+warningThreshold=20
+okayColor="green"
+warnColor="red"
+
+###
+### Get battery percentages for all bluetooth devices
+###
+
 percentages=`                          \
 ioreg -r -d 1 -k BatteryPercent        \
 | egrep '"Product"|"BatteryPercent"'   \
@@ -22,7 +34,6 @@ ioreg -r -d 1 -k BatteryPercent        \
 `
 
 warning=false
-warningThreshold=20
 
 ###
 ### Output each percentage, and check for any low batteries
@@ -40,9 +51,9 @@ done <<< "$percentages"
 
 if $warning;
 then
-	echo "$output| color=red"
+	echo "$output| color=$warnColor"
 else
-	echo "$output| color=green"
+	echo "$output| color=$okayColor"
 fi;
 
 ###
@@ -51,16 +62,15 @@ fi;
 
 echo "---"
 
-prefPane="open /System/Library/PreferencePanes/Bluetooth.prefPane"
-openTerminal="true"
+command="terminal=true bash=open param1=/System/Library/PreferencePanes/Bluetooth.prefPane"
 
 while read -r line; do
         percentage=${line##* }
         if [[ $percentage < $warningThreshold ]];
         then
-                echo "$line | color=red terminal=$openTerminal bash=\"$prefPane\""
+		echo "$line% | color=$warnColor $command"
 	else
-                echo "$line | color=green terminal=$openTerminal bash=\"$prefPane"
+		echo "$line% | color=$okayColor $command"
         fi;
 done <<< "$percentages"
 
