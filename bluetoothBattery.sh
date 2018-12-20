@@ -42,19 +42,22 @@ warning=false
 output="/"
 while read -r line; do
 	percentage=${line##* }
-	if [[ $percentage < $warningThreshold ]];
+	if [ "$percentage" != "" ]
 	then
-		warning=true
-	fi;
-	output+="$percentage/"
+		if [ $percentage -lt $warningThreshold ]
+		then
+			warning=true
+		fi
+		output+="$percentage/"
+	fi
 done <<< "$percentages"
 
-if $warning;
+if $warning
 then
 	echo "$output| color=$warnColor"
 else
 	echo "$output| color=$okayColor"
-fi;
+fi
 
 ###
 ### Pull-down area
@@ -66,11 +69,14 @@ command="terminal=true bash=open param1=/System/Library/PreferencePanes/Bluetoot
 
 while read -r line; do
         percentage=${line##* }
-        if [[ $percentage < $warningThreshold ]];
-        then
-		echo "$line% | color=$warnColor $command"
-	else
-		echo "$line% | color=$okayColor $command"
-        fi;
+	if [ "$percentage" != "" ]
+	then
+		if [ $percentage -lt $warningThreshold ]
+	        then
+			echo "$line% | color=$warnColor $command"
+		else
+			echo "$line% | color=$okayColor $command"
+		fi
+	fi
 done <<< "$percentages"
 
