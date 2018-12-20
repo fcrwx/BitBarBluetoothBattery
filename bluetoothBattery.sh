@@ -16,6 +16,7 @@
 ### Customization
 ###
 
+delimiter="/"
 warningThreshold=20
 okayColor="green"
 warnColor="red"
@@ -39,7 +40,7 @@ warning=false
 ### Output each percentage, and check for any low batteries
 ###
 
-output="/"
+output="$delimiter"
 while read -r line; do
 	percentage=${line##* }
 	if [ "$percentage" != "" ]
@@ -48,7 +49,7 @@ while read -r line; do
 		then
 			warning=true
 		fi
-		output+="$percentage/"
+		output+="$percentage$delimiter"
 	fi
 done <<< "$percentages"
 
